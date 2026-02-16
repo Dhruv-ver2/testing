@@ -405,15 +405,15 @@ function initAboutMeSection() {
         if (!cryptoCard || !portfolioCard || !topSecretCard) return;
 
         if (themeName === 'theme-metallic-sky') {
-            cryptoCard.style.backgroundImage = "url('images/matrix.jpg')";
-            portfolioCard.style.backgroundImage = "url('images/planet.jpg')";
-            if (hiddenVentureImg) hiddenVentureImg.src = 'images/ai1.jpg';
-            topSecretCard.style.backgroundImage = "url('images/tabbystar.jpg')";
+            cryptoCard.style.backgroundImage = "url('/static/images/matrix.jpg')";
+            portfolioCard.style.backgroundImage = "url('/static/images/planet.jpg')";
+            if (hiddenVentureImg) hiddenVentureImg.src = '/static/images/ai1.jpg';
+            topSecretCard.style.backgroundImage = "url('/static/images/tabbystar.jpg')";
         } else { 
-            cryptoCard.style.backgroundImage = "url('images/matrixl.jpg')";
-            portfolioCard.style.backgroundImage = "url('images/planetl.jpg')";
-            if (hiddenVentureImg) hiddenVentureImg.src = 'images/ai1l.jpg';
-            topSecretCard.style.backgroundImage = "url('images/tabbystarl.jpg')";
+            cryptoCard.style.backgroundImage = "url('/static/images/matrixl.jpg')";
+            portfolioCard.style.backgroundImage = "url('/static/images/planetl.jpg')";
+            if (hiddenVentureImg) hiddenVentureImg.src = '/static/images/ai1l.jpg';
+            topSecretCard.style.backgroundImage = "url('/static/images/tabbystarl.jpg')";
         }
     }
 
@@ -434,9 +434,8 @@ function initAboutMeSection() {
         }
     }
 
-    // UPDATED: Always force light theme on initial page load
-    const forcedDefaultTheme = 'theme-lucid-blue';
-    applyTheme(forcedDefaultTheme);
+    const savedTheme = localStorage.getItem('theme') || 'theme-lucid-blue';
+    applyTheme(savedTheme);
 
     themeToggleButton.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -449,7 +448,6 @@ function initAboutMeSection() {
         button.addEventListener('click', () => {
             const selectedTheme = button.dataset.theme;
             applyTheme(selectedTheme);
-            // Save the selection so it persists during the current user session/navigation
             localStorage.setItem('theme', selectedTheme);
             themeOptionsMenu.classList.remove('visible');
             themeToggleButton.setAttribute('aria-expanded', 'false');
@@ -481,10 +479,10 @@ function initAboutMeSection() {
     if (resumeButton) {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         if (isMobile) {
-            resumeButton.href = "https://www.linkedin.com/in/your-username";
+            resumeButton.href = "https://www.linkedin.com/in/dhruv-vaishnav";
             resumeButton.target = "_blank";
         } else {
-            resumeButton.href = "Dhruv_Vaishnav_Resume.pdf"; 
+            resumeButton.href = "{% static 'Dhruv_Vaishnav_Resume.pdf' %}"; 
             resumeButton.download = "DhruvVaishnav_Resume.pdf";
         }
     }

@@ -30,7 +30,7 @@
     <div class="theme-selector-container">
         <button class="theme-toggle" id="theme-toggle-btn" aria-label="Open theme selector" aria-expanded="false">
             <svg class="icon-theme" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 18C13.0609 18 14.0783 17.5786 14.8284 16.8284C15.5786 16.0783 16 15.0609 16 14C16 11.7909 14.2091 10 12 10V18Z"></path>
+                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 18C13.0609 18 14.0783 17.5786 14.8284 16.8284C15.5786 16.0783 16 15.0609 16 14C16 11.7909 14.2091 10 12 10V18Z"></path>
             </svg>
         </button>
         <div class="theme-options" id="theme-options-menu" role="menu">
@@ -46,7 +46,7 @@
     </div>
 
     <section class="hero" id="home">
-        anvas id="particle-canvas"></canvas>
+        <canvas id="particle-canvas"></canvas>
         <header class="hero-content">
             <h1 class="hero-headline">
                 <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
@@ -65,7 +65,7 @@
     </section>
     
     <section class="about-me" id="about-me">
-        anvas id="background-canvas"></canvas>
+        <canvas id="background-canvas"></canvas>
         <div class="about-me-container">
             <h2 class="section-title">About Me</h2>
             <p class="bio-text">
@@ -83,7 +83,7 @@
                             <span class="tech-tag">HTML/CSS</span>
                         </div>
                         <div class="project-links">
-                            <a href="project-status.html" class="project-btn">View Project</a>
+                            <a href="#" class="project-btn">View Project</a>
                         </div>
                     </div>
                 </div>
@@ -151,8 +151,8 @@
             </div>
             
             <div class="action-buttons">
-                <a href="/Dhruv_Vaishnav_Resume.pdf" class="download-resume-btn" id="view-resume-btn" target="_blank" rel="noopener noreferrer">View Resume</a>
-                <a href="/Dhruv_Vaishnav_Resume.pdf" download="Dhruv_Vaishnav_Resume.pdf" class="download-resume-btn" id="resume-btn">Download Resume</a>
+                <a href="{% static 'Dhruv_Vaishnav_Resume.pdf' %}" class="download-resume-btn" id="view-resume-btn" target="_blank" rel="noopener noreferrer">View Resume</a>
+                <a href="{% static 'Dhruv_Vaishnav_Resume.pdf' %}" download="Dhruv_Vaishnav_Resume.pdf" class="download-resume-btn" id="resume-btn">Download Resume</a>
                 <a href="{% url 'contact' %}" class="download-resume-btn" target="_blank" rel="noopener noreferrer">Contact Me</a>
             </div>
         </div>
