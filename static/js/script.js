@@ -234,7 +234,7 @@ function initParticleSystem() {
                     let opacityValue = 1 - (distance / (JS_CONFIG.CONNECTION_DISTANCE * JS_CONFIG.CONNECTION_DISTANCE));
                     try {
                         const colorParts = lineColor.match(/[\d\.]+/g);
-                        if (colorParts.length >= 3) {
+                        if (colorParts && colorParts.length >= 3) {
                             ctx.strokeStyle = `rgba(${colorParts[0]}, ${colorParts[1]}, ${colorParts[2]}, ${opacityValue.toFixed(2)})`;
                         } else {
                             ctx.strokeStyle = lineColor;
@@ -282,7 +282,7 @@ function initAboutMeSection() {
     const themeOptionsMenu = document.getElementById('theme-options-menu');
     const themeOptionButtons = document.querySelectorAll('.theme-option-btn');
     const canvas = document.getElementById('background-canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas ? canvas.getContext('2d') : null;
 
     let nodes = [];
     let animationFrameId;
@@ -328,6 +328,7 @@ function initAboutMeSection() {
     }
 
     function initNodes() {
+        if (!canvas) return;
         nodes = [];
         for (let i = 0; i < NODE_COUNT; i++) {
             nodes.push(new Node(canvas.width, canvas.height));
@@ -396,27 +397,6 @@ function initAboutMeSection() {
         });
     }
 
-    function updateCardImages(themeName) {
-        const cryptoCard = document.getElementById('crypto-card');
-        const portfolioCard = document.getElementById('portfolio-card');
-        const hiddenVentureImg = document.querySelector('#hidden-venture-card .bg-image');
-        const topSecretCard = document.getElementById('top-secret-card');
-
-        if (!cryptoCard || !portfolioCard || !topSecretCard) return;
-
-        if (themeName === 'theme-metallic-sky') {
-            cryptoCard.style.backgroundImage = "url('/static/images/matrix.jpg')";
-            portfolioCard.style.backgroundImage = "url('/static/images/planet.jpg')";
-            if (hiddenVentureImg) hiddenVentureImg.src = '/static/images/ai1.jpg';
-            topSecretCard.style.backgroundImage = "url('/static/images/tabbystar.jpg')";
-        } else { 
-            cryptoCard.style.backgroundImage = "url('/static/images/matrixl.jpg')";
-            portfolioCard.style.backgroundImage = "url('/static/images/planetl.jpg')";
-            if (hiddenVentureImg) hiddenVentureImg.src = '/static/images/ai1l.jpg';
-            topSecretCard.style.backgroundImage = "url('/static/images/tabbystarl.jpg')";
-        }
-    }
-
     function applyTheme(themeName) {
         document.body.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
         document.documentElement.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
@@ -424,8 +404,6 @@ function initAboutMeSection() {
         document.body.classList.add(themeName);
         document.documentElement.classList.add(themeName);
         
-        updateCardImages(themeName); 
-
         if (typeof initParticleSystem === 'function') {
            initParticleSystem();
         }
@@ -455,13 +433,14 @@ function initAboutMeSection() {
     });
 
     window.addEventListener('click', () => {
-        if (themeOptionsMenu.classList.contains('visible')) {
+        if (themeOptionsMenu && themeOptionsMenu.classList.contains('visible')) {
             themeOptionsMenu.classList.remove('visible');
             themeToggleButton.setAttribute('aria-expanded', 'false');
         }
     });
     
     aboutSection.addEventListener('mousemove', (e) => {
+        if (!aboutSection) return;
         mouse.x = e.clientX - aboutSection.getBoundingClientRect().left;
         mouse.y = e.clientY - aboutSection.getBoundingClientRect().top;
     });
@@ -482,8 +461,8 @@ function initAboutMeSection() {
             resumeButton.href = "https://www.linkedin.com/in/dhruv-vaishnav";
             resumeButton.target = "_blank";
         } else {
-            resumeButton.href = "{% static 'Dhruv_Vaishnav_Resume.pdf' %}"; 
-            resumeButton.download = "DhruvVaishnav_Resume.pdf";
+            // Add click event for download functionality
+            resumeButton.addEventListener('click', downloadResume);
         }
     }
     
@@ -522,4 +501,20 @@ function initAboutMeSection() {
     wrapHeadingsInSpans();
     setupAnimation();
     window.addEventListener('resize', setupAnimation);
+}
+
+/*
+==========================================================================
+ RESUME DOWNLOAD FUNCTION
+==========================================================================
+*/
+function downloadResume(e) {
+    e.preventDefault(); 
+    const resumeUrl = "/static/Dhruv_Vaishnav_Resume.pdf"; 
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Dhruv_Vaishnav_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
