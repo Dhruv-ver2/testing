@@ -509,8 +509,9 @@ function initAboutMeSection() {
 ==========================================================================
 */
 function downloadResume(e) {
-    e.preventDefault(); 
-    const resumeUrl = "/static/Dhruv_Vaishnav_Resume.pdf"; 
+    e.preventDefault();
+    // Get the URL from the data attribute (which has the proper Django static path)
+    const resumeUrl = document.getElementById('resume-btn').getAttribute('data-resume-url');
     const link = document.createElement('a');
     link.href = resumeUrl;
     link.download = 'Dhruv_Vaishnav_Resume.pdf';
