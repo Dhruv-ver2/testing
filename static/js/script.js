@@ -398,19 +398,38 @@ function initAboutMeSection() {
     }
 
     function applyTheme(themeName) {
-        document.body.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
-        document.documentElement.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
-
-        document.body.classList.add(themeName);
-        document.documentElement.classList.add(themeName);
-        
-        if (typeof initParticleSystem === 'function') {
-           initParticleSystem();
+    document.body.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
+    document.documentElement.classList.remove('theme-lucid-blue', 'theme-metallic-sky');
+    document.body.classList.add(themeName);
+    document.documentElement.classList.add(themeName);
+    
+    // Handle card image switching based on theme
+    const cardImageMap = {
+        'crypto-card': { light: 'matrixl.jpg', dark: 'matrix.jpg' },
+        'portfolio-card': { light: 'planetl.jpg', dark: 'planet.jpg' },
+        'judo-card': { light: 'ai1l.jpg', dark: 'ai1.jpg' },
+        'top-secret-card': { light: 'tabbystarl.jpg', dark: 'tabbstar.jpg' }
+    };
+    
+    const isDarkTheme = themeName === 'theme-metallic-sky';
+    
+    Object.entries(cardImageMap).forEach(([cardId, images]) => {
+        const card = document.getElementById(cardId);
+        if (card) {
+            const imageName = isDarkTheme ? images.dark : images.light;
+            const imageUrl = `/static/images/${imageName}`;
+            card.style.backgroundImage = `url('${imageUrl}')`;
         }
-        if (typeof setupAnimation === 'function') {
-           setupAnimation();
-        }
+    });
+    
+    if (typeof initParticleSystem === 'function') {
+        initParticleSystem();
     }
+    if (typeof setupAnimation === 'function') {
+        setupAnimation();
+    }
+}
+
 
     const savedTheme = localStorage.getItem('theme') || 'theme-lucid-blue';
     applyTheme(savedTheme);
